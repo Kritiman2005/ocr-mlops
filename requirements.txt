@@ -1,0 +1,30 @@
+# Core ML
+torch>=2.0.0
+transformers>=4.36.0
+datasets>=2.16.0
+pillow>=10.0.0
+
+# OCR
+sentencepiece
+
+# Data
+pandas
+pyyaml
+s3fs
+
+# API
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Monitoring & Utils
+numpy
+loguru
+
+# Testing
+pytest
+httpx
+
+# Optional (future)
+mlflow
+evidently

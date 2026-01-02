@@ -1,0 +1,16 @@
+model:
+  name: microsoft/trocr-base-printed
+  output_dir: s3://ocr-bucket/models/trocr-v1
+
+dataset:
+  train_csv: s3://ocr-bucket/data/processed/train.csv
+  val_csv: s3://ocr-bucket/data/processed/val.csv
+
+training:
+  batch_size: 4
+  epochs: 3
+  learning_rate: 5e-5
+  fp16: true
+
+registry:
+  approved_model_path: s3://ocr-bucket/models/approved/
