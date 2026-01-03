@@ -1,3 +1,24 @@
+from fastapi import FastAPI, File, UploadFile, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+import torch
+import io
+from PIL import Image
+
+app = FastAPI()
+
+# Mount frontend
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
 @app.post("/ocr")
 async def run_ocr(file: UploadFile = File(...)):
     image_bytes = await file.read()
@@ -17,7 +38,6 @@ async def run_ocr(file: UploadFile = File(...)):
         skip_special_tokens=True
     )[0]
 
-    # Confidence estimation (mean token probability)
     scores = torch.stack(outputs.scores)
     probs = torch.softmax(scores, dim=-1)
     max_probs = probs.max(dim=-1).values
